@@ -1,70 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Events</title>
     <style>
         /* General Styling */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #1C1C1C; /* Dark background for an intense feel */
-            color: #e4e4e4; /* Light text for readability */
-            line-height: 1.6;
+            background-color: #f9fafc;
+            margin: 0;
+            padding: 0;
+            color: #333;
         }
 
-        /* Header and Navigation */
+        /* Header Section */
         header {
-            background-color:rgb(124, 18, 23); /* Bold red header */
+            background-color: #0056b3; /* Rich Blue */
             color: white;
             text-align: center;
-            padding: 40px 0;
+            padding: 25px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         header h1 {
-            font-size: 3.5em;
-            font-weight: bold;
+            font-size: 2.5em;
             margin: 0;
         }
 
+        /* Navigation Bar */
         nav {
-            background-color: #212121; /* Dark gray navigation */
-            padding: 15px 0;
+            background-color: #333; /* Dark Gray */
+            padding: 10px 0;
             text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 999;
         }
 
         nav ul {
             list-style-type: none;
-            display: inline-block;
+            margin: 0;
+            padding: 0;
         }
 
         nav ul li {
             display: inline;
-            margin: 0 25px;
+            margin: 0 15px;
         }
 
         nav ul li a {
-            text-decoration: none;
             color: white;
-            font-size: 1.2em;
-            padding: 12px 25px;
-            border-radius: 30px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-decoration: none;
             font-weight: bold;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
 
         nav ul li a:hover {
-            background-color: #ff5722; /* Orange-red hover effect */
-            transform: scale(1.1); /* Slight zoom effect on hover */
+            background-color: #0056b3; /* Hover effect - blue */
         }
 
         /* Events Container */
@@ -72,66 +66,69 @@
             max-width: 1200px;
             margin: 50px auto;
             padding: 30px;
-            background-color: #2e2e2e; /* Darker background for events section */
+            background-color: white;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .events-container h1 {
             text-align: center;
-            color: #e50914; /* Bold red for headings */
-            font-size: 2.5em;
+            font-size: 2.2em;
+            color: #333;
+            margin-bottom: 30px;
         }
 
+        /* Event Item Styling */
         .event-item {
-            display: flex;
-            flex-direction: column;
+            background-color: #ffffff;
             padding: 20px;
-            background-color: #333; /* Dark background for each event */
-            border-radius: 8px;
             margin-bottom: 20px;
+            border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .event-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
 
         .event-item h3 {
+            font-size: 1.8em;
+            color: #333;
             margin-top: 0;
-            font-size: 24px;
-            color: #fff;
-            font-weight: bold;
         }
 
         .event-item p {
             font-size: 16px;
-            color: #ccc; /* Light gray for the description text */
+            color: #555;
         }
 
         .event-item .event-details {
             margin-top: 10px;
             font-size: 14px;
-            color: #999; /* Slightly muted color for details */
+            color: #777;
         }
 
         .event-item .buy-ticket-btn {
             display: inline-block;
             margin-top: 20px;
-            padding: 5px 20px;
-            width:80px;
-            background-color: #ff5722; /* Bold orange-red button */
+            padding: 12px 25px;
+            background-color: #28a745; /* Green */
             color: white;
             text-decoration: none;
             font-weight: bold;
             border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: background-color 0.3s ease;
         }
 
         .event-item .buy-ticket-btn:hover {
-            background-color:rgb(23, 116, 20); /* Darker red when hovered */
-            transform: scale(1.05);
+            background-color: #218838; /* Darker Green on hover */
         }
 
-        /* Footer */
+        /* Footer Section */
         footer {
-            background-color: #212121;
+            background-color: #333;
             color: white;
             text-align: center;
             padding: 15px;
@@ -140,27 +137,15 @@
             width: 100%;
         }
 
-        /* Responsiveness */
+        /* Responsive Design */
         @media (max-width: 768px) {
             nav ul li {
                 display: block;
-                margin: 15px 0;
+                margin: 10px 0;
             }
 
             .events-container {
                 padding: 20px;
-            }
-
-            .event-item h3 {
-                font-size: 22px;
-            }
-
-            .event-item p {
-                font-size: 14px;
-            }
-
-            .event-item .buy-ticket-btn {
-                padding: 12px 25px;
             }
         }
     </style>
@@ -171,20 +156,21 @@
     <!-- Header Section -->
     <header>
         <h1>ISport</h1>
+        <p>Your Ultimate Sports Experience</p>
     </header>
 
     <!-- Navigation Bar -->
     <nav>
         <ul>
-            <li><a href="../fanshome">Home</a></li>
-            <li><a href="../about">About Us</a></li>
-            <li><a href="../view_events">View Events</a></li>
-            <li><a href="../bookinghistory">Book Events</a></li>
+            <li><a href="../adminhome">Home</a></li>
+            <li><a href="../adminview_events">View Events</a></li>
+            <li><a href="../adminbookings">View Bookings</a></li>
+            <li><a href="../viewusers">View Users</a></li>
             <li><a href="../logout">Logout</a></li>
         </ul>
     </nav>
 
-    <!-- Main Content - Events -->
+    <!-- Main Content - Upcoming Events -->
     <div class="events-container">
         <h1>Upcoming Events</h1>
 
@@ -197,12 +183,10 @@
                 <p><strong>Location:</strong> {{ event.location }}</p>
                 <p><strong>Price:</strong> ${{ event.price }}</p>
             </div>
-            <a class="buy-ticket-btn" href="{% url 'purchase_ticket' event.id %}">Buy Ticket</a>
         </div>
         {% empty %}
         <p>No events available at the moment.</p>
         {% endfor %}
-
     </div>
 
     <!-- Footer -->

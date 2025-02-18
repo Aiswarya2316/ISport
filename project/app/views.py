@@ -132,7 +132,7 @@ def admin_login(request):
         try:
             admin = adminreg.objects.get(email=email , password=password)
             request.session['admin'] = admin.email
-            return redirect('admin_home')             
+            return redirect('adminhome')             
         except adminreg.DoesNotExist:
             messages.error(request, "No admin account found with this email!")
             return redirect('admin_login')
@@ -166,6 +166,16 @@ def fanshome(request):
 
 def viewhome(request):
     return render(request,'publisher/viewhome.html')
+
+
+
+def adminhome(request):
+    return render(request,'admin/admin_home.html')
+
+
+
+
+
 
 
 
@@ -227,6 +237,19 @@ def view_events(request):
     return render(request, 'bookers/view_events.html', {'events': events})
 
 
+
+
+def adminview_events(request):
+    events = EventTickets.objects.all()
+    return render(request, 'admin/view_events.html', {'events': events})
+
+
+
+
+
+
+
+
 # Fan can purchase a ticket for an event
 def purchase_ticket(request, event_id):
     event = EventTickets.objects.get(id=event_id)
@@ -246,6 +269,40 @@ def purchase_ticket(request, event_id):
 
         return redirect('view_events')  # Redirect back to events page after purchase
 
-    return render(request, 'purchase_ticket.html', {'event': event})
+    return render(request, 'bookers/purchase_ticket.html', {'event': event})
+
+
+
+def bookinghistory(request):
+    events = TicketPurchase.objects.all()
+    return render(request,'bookers/bookinghistory.html',{'events':events})
+
+
+
+def bookings(request):
+    events = TicketPurchase.objects.all()
+    return render(request,'publisher/bookings.html',{'events':events})
+
+
+def adminbookings(request):
+    events = TicketPurchase.objects.all()
+    return render(request,'admin/bookings.html',{'events':events})
+
+
+
+
+
+
+def viewusers(request):
+    users=FanRegister.objects.all()
+    return render(request,'admin/viewusers.html',{'users':users})
+
+
+
+def about(request):
+    return render(request,'bookers/aboutus.html')
+
+
+
 
 

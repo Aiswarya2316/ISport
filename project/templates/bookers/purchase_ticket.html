@@ -3,22 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Purchase Ticket</title>
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1C1C1C; /* Dark background for an intense feel */
+            color: #e4e4e4; /* Light text for readability */
+            line-height: 1.6;
+        }
+
+        /* Header Section */
+        header {
+            background-color:rgb(145, 20, 26); /* Bold red header */
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        header h1 {
+            font-size: 3.5em;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #212121; /* Dark gray navigation */
+            padding: 15px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: inline-block;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.2em;
+            padding: 12px 25px;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            background-color: #ff5722; /* Orange-red hover effect */
+            transform: scale(1.1);
+        }
+
+        /* Main Content Section - Container */
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #333; /* Dark background for form section */
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .container h1 {
+            text-align: center;
+            color: #e50914; /* Bold red for headings */
+            font-size: 2.5em;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 16px;
+            color: #ddd; /* Lighter label text */
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #444; /* Dark border to match the theme */
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #2a2a2a; /* Slightly lighter background for input */
+            color: white;
+        }
+
+        .form-group input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .form-group input[type="number"]::-webkit-outer-spin-button,
+        .form-group input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 14px;
+            background-color: #ff5722; /* Orange-red button */
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-weight: bold;
+        }
+
+        .form-group button:hover {
+            background-color:rgb(9, 229, 64); /* Darker red button on hover */
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #212121;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul li {
+                display: block;
+                margin: 10px 0;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .container h1 {
+                font-size: 2em;
+            }
+
+            .form-group input, .form-group button {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <!-- purchase_ticket.html -->
 
-<h1>Purchase Ticket for {{ event.title }}</h1>
-<form method="POST">
-  {% csrf_token %}
-  <label for="fan_name">Fan Name:</label>
-  <input type="text" name="fan_name" required><br><br>
+    <!-- Header Section -->
+    <header>
+        <h1>ISport</h1>
+    </header>
 
-  <label for="number_of_tickets">Number of Tickets:</label>
-  <input type="number" name="number_of_tickets" required min="1"><br><br>
+    <!-- Navigation Bar -->
+   
 
-  <button type="submit">Buy Tickets</button>
-</form>
+    <!-- Main Content Section - Purchase Ticket -->
+    <div class="container">
+        <h1>Purchase Ticket for {{ event.title }}</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="fan_name">Fan Name:</label>
+                <input type="text" name="fan_name" id="fan_name" required>
+            </div>
+            <div class="form-group">
+                <label for="number_of_tickets">Number of Tickets:</label>
+                <input type="number" name="number_of_tickets" id="number_of_tickets" required min="1">
+            </div>
+            <div class="form-group">
+                <button type="submit">Buy Tickets</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 ISport. All Rights Reserved.</p>
+    </footer>
 
 </body>
+
 </html>

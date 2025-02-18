@@ -13,35 +13,45 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
+            font-family: 'Arial', sans-serif;
+            background-color: #121212; /* Dark background for a professional look */
+            color: #e4e4e4; /* Light text for contrast */
             line-height: 1.6;
         }
 
+        /* Header Section */
         header {
-            background-color: #333;
+            background-color:rgb(131, 16, 21); /* Bold red color for header */
             color: white;
             text-align: center;
-            padding: 20px 0;
+            padding: 10px 0;
         }
 
         header img {
-            max-width: 100px;
+            max-width: 120px;
             margin-bottom: 10px;
         }
 
         header h1 {
-            font-size: 2.5em;
+            font-size: 3em;
+            font-weight: bold;
             margin: 0;
         }
 
+        header p {
+            font-size: 1.5em;
+            margin-top: 15px;
+        }
+
+        /* Navigation Section */
         nav {
-            background-color: #444;
+            background-color: #212121; /* Dark gray background for navigation */
             width: 100%;
             text-align: center;
-            padding: 15px 0;
-            margin-top: 20px;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 999;
         }
 
         nav ul {
@@ -51,24 +61,52 @@
 
         nav ul li {
             display: inline;
-            margin: 0 15px;
+            margin: 0 30px;
         }
 
         nav ul li a {
             text-decoration: none;
             color: white;
             font-size: 1.2em;
-            padding: 8px 15px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+            padding: 12px 25px;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-weight: bold;
         }
 
         nav ul li a:hover {
-            background-color: #007bff;
+            background-color: #ff5722; /* Aggressive orange-red hover color */
+            transform: scale(1.1); /* Slight scale-up effect on hover */
+        }
+
+        /* Main Content Section */
+        main {
+            padding: 80px 15%;
+            text-align: center;
+        }
+
+        main h2 {
+            font-size: 2.5em;
+            color: #ff5722; /* Bright orange-red for main heading */
+            margin-bottom: 20px;
+        }
+
+        .intro {
+            font-size: 1.4em;
+            margin-top: 20px;
+            color: #b0b0b0; /* Subtle light gray text for intro */
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+
+            header p {
+                font-size: 1.2em;
+            }
+
             nav ul {
                 display: block;
                 margin-top: 10px;
@@ -76,31 +114,43 @@
 
             nav ul li {
                 display: block;
-                margin: 10px 0;
+                margin: 15px 0;
             }
 
-            header h1 {
-                font-size: 2em;
+            main {
+                padding: 20px;
+            }
+
+            .intro {
+                font-size: 1.2em;
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- Header Section -->
     <header>
         <img src="../static/attachment_150915102.jpg" alt="ISport Logo">
         <h1>ISport</h1>
+        <p>Your Ultimate Destination for Sports Events</p>
     </header>
       
+    <!-- Navigation Section -->
     <nav>
         <ul>
-            <li><a href="../aboutus">About Us</a></li>
-            <li><a href="../viewevents">View Events</a></li>
-            <li><a href="../eventbooking">Book Events</a></li>
-            <li><a href="../profile">Profile</a></li>
+            <li><a href="../about">About Us</a></li>
+            <li><a href="../view_events">View Events</a></li>
+            <li><a href="../bookinghistory">Event Booking</a></li>
             <li><a href="../logout">Logout</a></li>
         </ul>
     </nav>
+
+    <!-- Main Content Section -->
+    <main>
+        <h2>Welcome to ISport!</h2>
+        <p class="intro">We bring you the best sports events from around the world. Stay updated with the latest happenings, book your tickets, and enjoy the thrill!</p>
+    </main>
 
 </body>
 </html>

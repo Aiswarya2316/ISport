@@ -2,6 +2,7 @@ from django.urls import path
 from .import views
 urlpatterns = [
     path('',views.home,name='home'),
+    path('adminhome',views.adminhome,name='adminhome'),
     path('admin_login', views.admin_login, name='admin_login'),
     path('register/', views.register, name='register'),
     path('fanregister/', views.fan_register, name='fan_register'),
@@ -12,8 +13,17 @@ urlpatterns = [
     path('viewhome',views.viewhome,name='viewhome'),
     path('add_event/', views.add_event, name='add_event'),
     path('view_event/', views.view_event, name='view_event'),
+    path('viewusers/', views.viewusers, name='viewusers'),
     path('view_events/', views.view_events, name='view_events'),
+    path('adminview_events/', views.adminview_events, name='adminview_events'),
     path('purchase_ticket/<int:event_id>/', views.purchase_ticket, name='purchase_ticket'),
+    path('bookinghistory/', views.bookinghistory, name='bookinghistory'),
+    path('bookings/', views.bookings, name='bookings'),
+    path('adminbookings/', views.adminbookings, name='adminbookings'),
+    path('about/', views.about, name='about'),
+   
+    
+    
 
     
 ]

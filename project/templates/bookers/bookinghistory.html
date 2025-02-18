@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking History</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a; /* Dark background */
+            margin: 0;
+            padding: 0;
+            color: #e4e4e4; /* Light text for contrast */
+        }
+
+        /* Header and Navigation */
+        header {
+            background-color:rgb(121, 18, 18); /* Aggressive red */
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            font-weight: bold;
+        }
+
+        nav {
+            background-color: #212121; /* Dark gray */
+            padding: 12px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 10px 15px;
+            transition: background-color 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #f44336; /* Hover effect with a strong red */
+            border-radius: 5px;
+        }
+
+        /* Main Content */
+        .events-container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #2c2c2c; /* Darker background for content */
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .events-container h1 {
+            text-align: center;
+            color: #f44336; /* Bright red for headers */
+            margin-bottom: 20px;
+        }
+
+        .event-item {
+            background-color: #333333; /* Dark background for each item */
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-item h3 {
+            color: #f44336; /* Red accent for event titles */
+            margin-bottom: 10px;
+        }
+
+        .event-details {
+            font-size: 16px;
+            color: #e4e4e4; /* Light text for details */
+        }
+
+        .event-details p {
+            margin: 5px 0;
+        }
+
+        .event-details strong {
+            color: #f44336; /* Red for strong emphasis */
+        }
+
+        /* Footer */
+        footer {
+            background-color: #212121; /* Dark footer */
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul li {
+                display: block;
+                margin: 10px 0;
+            }
+
+            .events-container {
+                padding: 20px;
+            }
+
+            .event-item {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>ISport</h1>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="../fanshome">Home</a></li>
+            <li><a href="../about">About Us</a></li>
+            <li><a href="../view_events">View Events</a></li>
+            <li><a href="../bookinghistory">Booking History</a></li>
+            <li><a href="../logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content - Booking History -->
+    <div class="events-container">
+        <h1>Booking History</h1>
+
+        {% if events %}
+        <div class="booking-history">
+            <ul>
+                {% for event in events %}
+                <li class="event-item">
+                    <h3>{{ event.event.title }}</h3>
+                    <div class="event-details">
+                        <p><strong>Event:</strong> {{ event.event.title }}</p>
+                        <p><strong>Date:</strong> {{ event.purchase_date }}</p>
+                        <p><strong>Number of Tickets:</strong> {{ event.number_of_tickets }}</p>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <p style="text-align: center; color: #f44336;">You have not booked any events yet.</p>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 ISport. All Rights Reserved.</p>
+    </footer>
+
+</body>
+
+</html>

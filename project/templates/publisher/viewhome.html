@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISport</title>
+    <title>ISport - Publisher Home</title>
     <style>
         /* Global Styles */
         * {
@@ -13,35 +14,36 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7; /* Light background for a clean look */
             color: #333;
             line-height: 1.6;
         }
 
+        /* Header Styles */
         header {
-            background-color: #333;
+            background-color: #0d1b2a; /* Dark blue background for professionalism */
             color: white;
             text-align: center;
-            padding: 20px 0;
+            padding: 30px 0;
         }
 
         header img {
-            max-width: 100px;
+            max-width: 80px;
             margin-bottom: 10px;
         }
 
         header h1 {
-            font-size: 2.5em;
-            margin: 0;
+            font-size: 2.8em;
+            font-weight: bold;
+            letter-spacing: 2px;
         }
 
+        /* Navigation Bar Styles */
         nav {
-            background-color: #444;
-            width: 100%;
+            background-color: #1e2a3a; /* Darker background for navigation */
             text-align: center;
             padding: 15px 0;
-            margin-top: 20px;
         }
 
         nav ul {
@@ -51,56 +53,171 @@
 
         nav ul li {
             display: inline;
-            margin: 0 15px;
+            margin: 0 20px;
         }
 
         nav ul li a {
             text-decoration: none;
-            color: white;
+            color: #fff;
             font-size: 1.2em;
-            padding: 8px 15px;
+            font-weight: 600;
+            padding: 10px 20px;
             border-radius: 5px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         nav ul li a:hover {
-            background-color: #007bff;
+            background-color: #00aaff; /* Light blue hover effect for better visibility */
+            transform: scale(1.1); /* Subtle scale effect to highlight */
+        }
+
+        /* Content Area Styles */
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h2 {
+            font-size: 2.5em;
+            color: #333;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .card {
+            display: inline-block;
+            width: 30%;
+            margin: 0 15px 30px 15px;
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .card .btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 12px 30px;
+            background-color: #00aaff;
+            color: white;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .card .btn:hover {
+            background-color: #0077cc;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #0d1b2a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2em;
+            }
+
             nav ul {
                 display: block;
-                margin-top: 10px;
             }
 
             nav ul li {
                 display: block;
-                margin: 10px 0;
+                margin-bottom: 10px;
             }
 
-            header h1 {
-                font-size: 2em;
+            .container {
+                padding: 30px;
+            }
+
+            .card {
+                width: 100%;
+                margin-bottom: 30px;
             }
         }
     </style>
 </head>
+
 <body>
 
+    <!-- Header Section -->
     <header>
         <img src="../static/attachment_150915102.jpg" alt="ISport Logo">
         <h1>ISport</h1>
     </header>
-      
+
+    <!-- Navigation Bar -->
     <nav>
         <ul>
-            <li><a href="../add_event">Add event</a></li>
-            <li><a href="../viewevents">View Events</a></li>
-            <li><a href="../eventbooking">Book Events</a></li>
-            <li><a href="../profile">Profile</a></li>
+            <li><a href="../viewhome">Home</a></li>
+            <li><a href="../add_event">Add Event</a></li>
+            <li><a href="../view_event">View Events</a></li>
+            <li><a href="../bookings">Bookings</a></li>
             <li><a href="../logout">Logout</a></li>
         </ul>
     </nav>
 
+    <!-- Main Content Section -->
+    <div class="container">
+        <h2>Welcome to the ISport Publisher Dashboard</h2>
+
+        <!-- Card Section with Publisher Options -->
+        <div class="card">
+            <h3>Add a New Event</h3>
+            <p>Create and publish new events for sports fans.</p>
+            <a href="../add_event" class="btn">Add Event</a>
+        </div>
+
+        <div class="card">
+            <h3>View All Events</h3>
+            <p>Manage and view all the events you've published.</p>
+            <a href="../view_event" class="btn">View Events</a>
+        </div>
+
+        <div class="card">
+            <h3>View Bookings</h3>
+            <p>Track and manage the bookings for your events.</p>
+            <a href="../bookings" class="btn">View Bookings</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 ISport. All Rights Reserved.</p>
+    </footer>
+
 </body>
+
 </html>

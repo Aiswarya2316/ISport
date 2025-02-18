@@ -1,36 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add Event - ISport</title>
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f8fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color:rgb(23, 27, 32);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #1c1c1c;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline-block;
+            padding: 15px 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 10px 15px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            border-radius: 4px;
+        }
+
+        nav ul li a:hover {
+            background-color: #007bff;
+            border-radius: 4px;
+        }
+
+        /* Form Styling */
+        .form-container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h1 {
+            font-size: 2.2em;
+            color: #003366;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-container input,
+        .form-container textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .form-container input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .form-container textarea {
+            resize: vertical;
+            height: 150px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 15px;
+            background-color: #28a745;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #218838;
+        }
+
+        .form-container .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1c1c1c;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            nav ul li {
+                display: block;
+                padding: 10px;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+
+            .form-container h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <!-- add_event.html -->
+    <!-- Header -->
+    <header>
+        <h1>ISport</h1>
+    </header>
 
-<h1>Add Event</h1>
-<form method="POST">
-  {% csrf_token %}
-  <label for="publisher_name">Publisher Name:</label>
-  <input type="text" name="publisher_name" required><br><br>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="../viewhome">Home</a></li>
+            <li><a href="../add_event">Add Event</a></li>
+            <li><a href="../view_event">View Events</a></li>
+            <li><a href="../bookings">Bookings</a></li>
+            <li><a href="../logout">Logout</a></li>
+        </ul>
+    </nav>
 
-  <label for="title">Event Title:</label>
-  <input type="text" name="title" required><br><br>
+    <!-- Form Container -->
+    <div class="form-container">
+        <h1>Add New Event</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <!-- Publisher Name Input -->
+            <label for="publisher_name">Publisher Name:</label>
+            <input type="text" name="publisher_name" required>
 
-  <label for="description">Description:</label>
-  <textarea name="description" required></textarea><br><br>
+            <!-- Event Title Input -->
+            <label for="title">Event Title:</label>
+            <input type="text" name="title" required>
 
-  <label for="date">Event Date:</label>
-  <input type="date" name="date" required><br><br>
+            <!-- Event Description Input -->
+            <label for="description">Event Description:</label>
+            <textarea name="description" required></textarea>
 
-  <label for="location">Location:</label>
-  <input type="text" name="location" required><br><br>
+            <!-- Event Date Input -->
+            <label for="date">Event Date:</label>
+            <input type="date" name="date" required>
 
-  <label for="price">Price:</label>
-  <input type="number" name="price" required><br><br>
+            <!-- Event Location Input -->
+            <label for="location">Location:</label>
+            <input type="text" name="location" required>
 
-  <button type="submit">Add Event</button>
-</form>
-  
+            <!-- Event Price Input -->
+            <label for="price">Price:</label>
+            <input type="number" name="price" required>
+
+            <!-- Submit Button -->
+            <button type="submit">Add Event</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 ISport. All Rights Reserved.</p>
+    </footer>
+
 </body>
+
 </html>

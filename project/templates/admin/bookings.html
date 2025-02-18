@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking History</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f1f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* Header Section */
+        header {
+            background-color: #007BFF; /* Vibrant Blue */
+            color: white;
+            text-align: center;
+            padding: 25px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #333; /* Dark Gray */
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #007BFF; /* Blue on hover */
+        }
+
+        /* Main Content Wrapper */
+        .events-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .events-container h1 {
+            text-align: center;
+            font-size: 2.2em;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        /* Event Item Styling */
+        .event-item {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .event-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-item h3 {
+            color: #007BFF; /* Blue for event title */
+            margin-bottom: 10px;
+        }
+
+        .event-details {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .event-details p {
+            margin: 5px 0;
+        }
+
+        .event-details strong {
+            color: #333;
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul li {
+                display: block;
+                margin: 10px 0;
+            }
+
+            .events-container {
+                padding: 20px;
+            }
+
+            .event-item {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>ISport</h1>
+        <p>Your Booking History</p>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="../adminhome">Home</a></li>
+            <li><a href="../adminview_events">View Events</a></li>
+            <li><a href="../adminbookings">View Bookings</a></li>
+            <li><a href="../viewusers">View Users</a></li>
+            <li><a href="../logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content - Booking History -->
+    <div class="events-container">
+        <h1>Booking History</h1>
+
+        {% for event in events %}
+        <div class="event-item">
+            <h3>Event: {{ event.event }}</h3>
+            <p><strong>Fan:</strong> {{ event.fan }}</p>
+            <div class="event-details">
+                <p><strong>Date of Purchase:</strong> {{ event.purchase_date }}</p>
+                <p><strong>Tickets Purchased:</strong> {{ event.number_of_tickets }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p>No bookings available at the moment.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 ISport. All Rights Reserved.</p>
+    </footer>
+
+</body>
+
+</html>
