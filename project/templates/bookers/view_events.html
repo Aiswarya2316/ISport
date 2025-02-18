@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- view_events.html -->
+
+<h1>Events</h1>
+<ul>
+  {% for event in events %}
+    <li>
+      <strong>{{ event.title }}</strong><br>
+      Date: {{ event.date }}<br>
+      Location: {{ event.location }}<br>
+      Price: ${{ event.price }}<br>
+      <a href="{% url 'purchase_ticket' event.id %}">Buy Ticket</a>
+    </li>
+  {% endfor %}
+</ul>
+
+</body>
+</html>

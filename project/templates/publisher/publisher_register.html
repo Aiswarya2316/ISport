@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.registration-card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+}
+
+.registration-card h2 {
+    margin-bottom: 20px;
+    font-size: 26px;
+    color: #333333;
+}
+
+.registration-card label {
+    display: block;
+    margin-bottom: 8px;
+    text-align: left;
+    color: #666666;
+}
+
+.registration-card input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+}
+
+.registration-card button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.registration-card button:hover {
+    background-color: #0056b3;
+}
+
+    </style>
+</head>
+<body>
+    <div class="registration-card">
+        <h2>Register</h2>
+        <form action=" " method="POST">
+            {% csrf_token %}
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" placeholder="location" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="text">Organozation:</label>
+            <input type="tel" id="organization" name="organization" placeholder="organization" required>
+
+            <label for="phone">Confirm password:</label>
+            <input type="tel" id="confirm_password" name="confirm_password" placeholder="phonenumber" required>
+
+            <button type="submit">Register</button>
+            <div class="container signin">
+                {% comment %} <a href="../">Cancel</a> {% endcomment %}
+              </div>
+        </form>
+    </div>
+</body>
+</html>

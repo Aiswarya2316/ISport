@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISport - Professional Homepage</title>
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body Styling */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Header Styling */
+    header {
+      background-color: #333;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3em;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
+
+    /* Logo Styling */
+    header img {
+      max-height: 50px;
+      margin-right: 20px;
+      vertical-align: middle;
+    }
+
+    /* Navigation Bar */
+    nav {
+      background-color: #444;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      margin: 0;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1em;
+      padding: 12px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: #555;
+    }
+
+    /* Main Content Section */
+    .main-content {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .main-content h2 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .main-content p {
+      font-size: 1.2em;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .main-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Get Started Button */
+    .get-started-btn {
+      background-color: #4CAF50;
+      color: white;
+      font-size: 1.2em;
+      padding: 15px 30px;
+      margin-top: 20px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .get-started-btn:hover {
+      background-color: #45a049;
+    }
+
+    /* Footer Styling */
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+
+    footer a {
+      color: #ddd;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #fff;
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.2em;
+      }
+
+      nav ul {
+        flex-direction: column;
+      }
+
+      .main-content {
+        padding: 20px;
+      }
+
+      .get-started-btn {
+        width: 100%;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="../static/attachment_150915102.jpg" alt="ISport Logo">
+  <h1>ISport</h1>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="../fanregister">SignUP as user</a></li>
+    <li><a href="../publisherregister">SignUp as ticket</a></li>
+  </ul>
+</nav>
+
+<div class="main-content">
+  <h2>Welcome to ISport</h2>
+  <p>At ISport, we provide world-class sporting solutions tailored to meet the needs of athletes, coaches, and sports enthusiasts. Our team is committed to delivering excellence in all aspects of sports management and training.</p>
+  <p>Explore our website to learn about our services, including professional coaching, equipment sales, and our expert insights on the latest trends in the sports industry.</p>
+  
+  <!-- Get Started Button -->
+  <button class="get-started-btn" onclick="window.location.href='../login';">Get Started</button>
+</div>
+
+<footer>
+  <p>&copy; 2025 ISport | <a href="#privacy-policy">Privacy Policy</a></p>
+</footer>
+
+</body>
+</html>
