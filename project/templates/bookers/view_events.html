@@ -198,10 +198,16 @@
                 <p><strong>Price:</strong> ${{ event.price }}</p>
             </div>
             <a class="buy-ticket-btn" href="{% url 'purchase_ticket' event.id %}">Buy Ticket</a>
+            <div class="live-score" id="live-score-{{ event.id }}">
+                <strong>Live Score:</strong> <span id="score-{{ event.id }}">Loading...</span>
+            </div>
         </div>
         {% empty %}
         <p>No events available at the moment.</p>
         {% endfor %}
+
+      
+        
 
     </div>
 
@@ -209,6 +215,31 @@
     <footer>
         <p>&copy; 2025 ISport. All Rights Reserved.</p>
     </footer>
+
+    <script>
+        function fetchLiveScore(eventId) {
+            fetch(`/live-score/${eventId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById(`score-${eventId}`).innerText = "No live score available";
+                    } else {
+                        document.getElementById(`score-${eventId}`).innerText = 
+                            `${data.team_a} ${data.score_a} - ${data.score_b} ${data.team_b}`;
+                    }
+                })
+                .catch(error => console.log("Error fetching live score:", error));
+        }
+    
+        // Auto-refresh scores every 5 seconds
+        document.addEventListener("DOMContentLoaded", function() {
+            {% for event in events %}
+                fetchLiveScore({{ event.id }});
+                setInterval(() => fetchLiveScore({{ event.id }}), 5000);
+            {% endfor %}
+        });
+    </script>
+    
 
 </body>
 

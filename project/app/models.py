@@ -62,6 +62,25 @@ class TicketPurchase(models.Model):
     event = models.ForeignKey(EventTickets, on_delete=models.CASCADE)
     purchase_date = models.DateTimeField(auto_now_add=True)
     number_of_tickets = models.PositiveIntegerField()
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    razorpay_order_id = models.CharField(max_length=255, blank=True, null=True)
+    payment_status = models.CharField(max_length=20, choices=[("Pending", "Pending"), ("Paid", "Paid")], default="Pending")
 
     def __str__(self):
-        return f"{self.fan.user.username} - {self.event.title} ({self.number_of_tickets})"
+        return f"{self.fan.name} - {self.event.title} ({self.number_of_tickets})"
+
+
+
+
+from django.db import models
+
+class LiveScore(models.Model):
+    event = models.OneToOneField(EventTickets, on_delete=models.CASCADE, related_name="live_score")
+    team_a = models.CharField(max_length=255)
+    team_b = models.CharField(max_length=255)
+    score_a = models.IntegerField(default=0)
+    score_b = models.IntegerField(default=0)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.event.title}: {self.team_a} {self.score_a} - {self.score_b} {self.team_b}"

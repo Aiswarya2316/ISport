@@ -249,27 +249,75 @@ def adminview_events(request):
 
 
 
+import razorpay
+from django.conf import settings
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+from .models import TicketPurchase, EventTickets, FanRegister
 
-# Fan can purchase a ticket for an event
 def purchase_ticket(request, event_id):
-    event = EventTickets.objects.get(id=event_id)
+    event = get_object_or_404(EventTickets, id=event_id)
 
-    if request.method == 'POST':
-        fan_name = request.POST.get('fan_name')
-        fan = FanRegister.objects.get(name=fan_name)
+    if request.method == "POST":
+        fan_name = request.POST["fan_name"]
+        num_tickets = int(request.POST["number_of_tickets"])
+        total_amount = event.price * num_tickets * 100  # Convert to paise
 
-        number_of_tickets = int(request.POST.get('number_of_tickets'))
+        if total_amount > 50000000:  # Razorpay max limit (₹5,00,000)
+            return render(request, "bookers/purchase_ticket.html", {
+                "event": event,
+                "error": "Total amount exceeds the allowed limit of ₹5,00,000 per transaction."
+            })
 
-        # Create a TicketPurchase object to track the purchase
-        TicketPurchase.objects.create(
+        fan = FanRegister.objects.filter(name=fan_name).first()
+
+        if not fan:
+            return render(request, "bookers/purchase_ticket.html", {"event": event, "error": "Fan not registered."})
+
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        order_data = {
+            "amount": int(total_amount),
+            "currency": "INR",
+            "payment_capture": "1"
+        }
+        order = client.order.create(order_data)
+
+        ticket_purchase = TicketPurchase.objects.create(
             fan=fan,
             event=event,
-            number_of_tickets=number_of_tickets
+            number_of_tickets=num_tickets,
+            amount=total_amount / 100,
+            razorpay_order_id=order["id"]
         )
 
-        return redirect('view_events')  # Redirect back to events page after purchase
+        context = {
+            "event": event,
+            "order_id": order["id"],
+            "razorpay_key": settings.RAZORPAY_KEY_ID,
+            "amount": total_amount,
+            "fan_name": fan.name
+        }
 
-    return render(request, 'bookers/purchase_ticket.html', {'event': event})
+        return render(request, "bookers/payment.html", context)
+
+    return render(request, "bookers/purchase_ticket.html", {"event": event})
+
+
+
+
+
+@csrf_exempt
+def payment_success(request):
+    order_id = request.GET.get("order_id")
+    ticket_purchase = TicketPurchase.objects.filter(razorpay_order_id=order_id).first()
+
+    if ticket_purchase:
+        ticket_purchase.payment_status = "Paid"
+        ticket_purchase.save()
+
+    return render(request, "bookers/success.html", {"ticket": ticket_purchase})
+
+
 
 
 
@@ -301,6 +349,27 @@ def viewusers(request):
 
 def about(request):
     return render(request,'bookers/aboutus.html')
+
+
+
+from django.http import JsonResponse
+from .models import LiveScore
+
+def live_score(request, event_id):
+    try:
+        score = LiveScore.objects.get(event_id=event_id)
+        data = {
+            "event": score.event.title,
+            "team_a": score.team_a,
+            "team_b": score.team_b,
+            "score_a": score.score_a,
+            "score_b": score.score_b,
+            "last_updated": score.last_updated.strftime("%Y-%m-%d %H:%M:%S")
+        }
+        return JsonResponse(data)
+    except LiveScore.DoesNotExist:
+        return JsonResponse({"error": "Live score not available"}, status=404)
+
 
 
 
