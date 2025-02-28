@@ -23,6 +23,7 @@ urlpatterns = [
     path('adminbookings/', views.adminbookings, name='adminbookings'),
     path('about/', views.about, name='about'),
     path('live-score/<int:event_id>/', views.live_score, name='live_score'),
+     path('chat/<int:event_id>/', views.event_chat, name='event_chat'),
    
     
     

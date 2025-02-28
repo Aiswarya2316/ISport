@@ -84,3 +84,17 @@ class LiveScore(models.Model):
 
     def __str__(self):
         return f"{self.event.title}: {self.team_a} {self.score_a} - {self.score_b} {self.team_b}"
+
+
+
+from django.db import models
+from django.utils.timezone import now
+
+class ChatMessage(models.Model):
+    fan = models.ForeignKey(FanRegister, on_delete=models.CASCADE)
+    publisher = models.ForeignKey(PublisherRegister, on_delete=models.CASCADE)
+    message = models.TextField()
+    timestamp = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return f"{self.fan.name} -> {self.publisher.name}: {self.message[:30]}"

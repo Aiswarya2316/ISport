@@ -366,9 +366,140 @@ def live_score(request, event_id):
             "score_b": score.score_b,
             "last_updated": score.last_updated.strftime("%Y-%m-%d %H:%M:%S")
         }
-        return JsonResponse(data)
     except LiveScore.DoesNotExist:
-        return JsonResponse({"error": "Live score not available"}, status=404)
+        # Set default values when no live score is available
+        data = {
+            "event": "Unknown Event",
+            "team_a": "Team A",
+            "team_b": "Team B",
+            "score_a": 0,
+            "score_b": 0,
+            "last_updated": "N/A"
+        }
+    
+    return JsonResponse(data)
+
+
+
+from django.shortcuts import render
+from .models import EventTickets
+
+def event_chat(request, event_id):
+    event = EventTickets.objects.get(id=event_id)
+    return render(request, 'bookers/chat.html', {'event': event, 'fan': request.user})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
