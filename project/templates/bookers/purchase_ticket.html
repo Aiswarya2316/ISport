@@ -180,6 +180,12 @@
     <!-- Main Content Section - Purchase Ticket -->
     <div class="container">
         <h1>Purchase Ticket for {{ event.title }}</h1>
+        {% if error %}
+<div style="color: white; background-color: red; padding: 10px; border-radius: 5px; text-align: center; margin-bottom: 15px;">
+    <strong>{{ error }}</strong>
+</div>
+{% endif %}
+
         <form method="POST">
             {% csrf_token %}
             <div class="form-group">

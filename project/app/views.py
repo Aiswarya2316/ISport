@@ -254,9 +254,17 @@ from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from .models import TicketPurchase, EventTickets, FanRegister
+from datetime import date
 
 def purchase_ticket(request, event_id):
     event = get_object_or_404(EventTickets, id=event_id)
+
+    # Prevent booking for past events
+    if event.date < date.today():
+        return render(request, "bookers/purchase_ticket.html", {
+            "event": event,
+            "error": "You cannot book tickets for past events."
+        })
 
     if request.method == "POST":
         fan_name = request.POST["fan_name"]
@@ -304,8 +312,6 @@ def purchase_ticket(request, event_id):
 
 
 
-
-
 @csrf_exempt
 def payment_success(request):
     order_id = request.GET.get("order_id")
@@ -321,9 +327,35 @@ def payment_success(request):
 
 
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import TicketPurchase, FanRegister
+
 def bookinghistory(request):
-    events = TicketPurchase.objects.all()
-    return render(request,'bookers/bookinghistory.html',{'events':events})
+    if 'fan' in request.session:  # Check if a fan is logged in
+        fan_email = request.session['fan']
+        try:
+            fan = FanRegister.objects.get(email=fan_email)
+            bookings = TicketPurchase.objects.filter(fan=fan)  # Fetch only the logged-in fan's bookings
+            return render(request, 'bookers/bookinghistory.html', {'bookings': bookings})
+        except FanRegister.DoesNotExist:
+            messages.error(request, "User not found!")
+            return redirect('login')
+    else:
+        messages.error(request, "Please log in to view your booking history!")
+        return redirect('login')
+
+def cancel_booking(request, booking_id):
+    if 'fan' in request.session:  # Check if a fan is logged in
+        fan_email = request.session['fan']
+        try:
+            fan = FanRegister.objects.get(email=fan_email)
+            booking = TicketPurchase.objects.get(id=booking_id, fan=fan)  # Ensure the user owns this booking
+            booking.delete()
+            messages.success(request, "Booking cancelled successfully!")
+        except TicketPurchase.DoesNotExist:
+            messages.error(request, "Booking not found or unauthorized!")
+    return redirect('bookinghistory')
 
 
 

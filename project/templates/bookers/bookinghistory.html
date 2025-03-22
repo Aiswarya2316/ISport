@@ -128,6 +128,22 @@
                 padding: 15px;
             }
         }
+        .cancel-btn {
+            background-color: #f44336; /* Red color for cancellation */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .cancel-btn:hover {
+            background-color: #c0392b; /* Darker red on hover */
+        }
+        
     </style>
 </head>
 
@@ -153,18 +169,22 @@
     <div class="events-container">
         <h1>Booking History</h1>
 
-        {% if events %}
+        {% if bookings %}
         <div class="booking-history">
             <ul>
-                {% for event in events %}
+                {% for booking in bookings %}
                 <li class="event-item">
-                    <h3>{{ event.event.title }}</h3>
+                    <h3>{{ booking.event.title }}</h3>
                     <div class="event-details">
-                        <p><strong>Event:</strong> {{ event.event.title }}</p>
-                        <p><strong>Date:</strong> {{ event.purchase_date }}</p>
-                        <p><strong>Number of Tickets:</strong> {{ event.number_of_tickets }}</p>
-                        <p><strong>Payment Status:</strong> {{ event.payment_status }}</p>
+                        <p><strong>Event:</strong> {{ booking.event.title }}</p>
+                        <p><strong>Date:</strong> {{ booking.purchase_date }}</p>
+                        <p><strong>Number of Tickets:</strong> {{ booking.number_of_tickets }}</p>
+                        <p><strong>Payment Status:</strong> {{ booking.payment_status }}</p>
                     </div>
+                    <form action="{% url 'cancel_booking' booking.id %}" method="POST" style="margin-top: 10px;">
+                        {% csrf_token %}
+                        <button type="submit" class="cancel-btn">Cancel Booking</button>
+                    </form>
                 </li>
                 {% endfor %}
             </ul>
@@ -172,6 +192,7 @@
         {% else %}
         <p style="text-align: center; color: #f44336;">You have not booked any events yet.</p>
         {% endif %}
+        
     </div>
 
     <!-- Footer -->
