@@ -62,6 +62,8 @@ def fan_register(request):
     return render(request, 'bookers/fan_register.html')
 
 
+from .models import AdminNotification
+
 def publisher_register(request):
     if request.method == 'POST':
         name = request.POST['name']
@@ -69,16 +71,24 @@ def publisher_register(request):
         location = request.POST['location']
         password = request.POST['password']
         confirm_password = request.POST['confirm_password']
+        
         if password != confirm_password:
             messages.error(request, "Passwords do not match!")
             return redirect('publisher_register')
+        
         if PublisherRegister.objects.filter(email=email).exists():
             messages.error(request, "Email already registered!")
             return redirect('publisher_register')
-        staff = PublisherRegister(name=name, email=email,  location=location, password=password ,confirm_password=confirm_password)
+
+        staff = PublisherRegister(name=name, email=email, location=location, password=password)
         staff.save()
-        messages.success(request, "publisher registered successfully!")
+
+        # Create admin notification
+        AdminNotification.objects.create(message=f"New publisher registered: {staff.name}")
+
+        messages.success(request, "Publisher registered successfully!")
         return redirect('login')
+
     return render(request, 'publisher/publisher_register.html')
 
 
@@ -169,8 +179,12 @@ def viewhome(request):
 
 
 
+from .models import AdminNotification
+
 def adminhome(request):
-    return render(request,'admin/admin_home.html')
+    notifications = AdminNotification.objects.filter(is_read=False).order_by('-timestamp')
+    return render(request, 'admin/admin_home.html', {'notifications': notifications})
+
 
 
 

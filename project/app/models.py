@@ -98,3 +98,13 @@ class ChatMessage(models.Model):
 
     def __str__(self):
         return f"{self.fan.name} -> {self.publisher.name}: {self.message[:30]}"
+
+
+
+
+from django.db import models
+
+class AdminNotification(models.Model):
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
