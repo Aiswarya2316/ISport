@@ -124,7 +124,7 @@ def user_login(request):
             pass  
         try:
             staff = PublisherRegister.objects.get(email=email, password=password)
-            request.session['publisher'] = staff.email
+            request.session['publisher'] = staff.id  # Store ID instead of email
             return redirect('viewhome')  
         except PublisherRegister.DoesNotExist:
             pass  
@@ -195,11 +195,16 @@ def adminhome(request):
 
 
 
+
+
 # views.py
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import PublisherRegister, EventTickets, FanRegister, TicketPurchase
 from django.core.exceptions import ObjectDoesNotExist
+
+
+
 
 
 # Publisher adds event ticket details
@@ -240,9 +245,24 @@ def add_event(request):
 
 
 
+
+
 def view_event(request):
     events = EventTickets.objects.all()
     return render(request, 'publisher/view_events.html', {'events': events})
+
+
+
+
+from django.shortcuts import redirect, get_object_or_404
+from .models import EventTickets
+
+def delete_event(request, event_id):
+    event = get_object_or_404(EventTickets, id=event_id, publisher=request.session.get('publisher'))  
+    event.delete()
+    return redirect('view_event')
+
+
 
 
 # View for displaying all events
