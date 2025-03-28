@@ -23,9 +23,12 @@ urlpatterns = [
     path('adminbookings/', views.adminbookings, name='adminbookings'),
     path('about/', views.about, name='about'),
     path('live-score/<int:event_id>/', views.live_score, name='live_score'),
-    path('chat/<int:event_id>/', views.event_chat, name='event_chat'),
+    path('event_chat/<int:event_id>/', views.event_chat, name='event_chat'),
+    path('send_chat_message/<int:event_id>/', views.send_chat_message, name='send_chat_message'),
     path('cancel-booking/<int:booking_id>/', views.cancel_booking, name='cancel_booking'),
     path('delete_event/<int:event_id>/', views.delete_event, name='delete_event'),
+    path('view_publishers/', views.view_publishers, name='view_publishers'),
+    path('delete_publisher/<int:publisher_id>/', views.delete_publisher, name='delete_publisher'),
    
     
     

@@ -447,12 +447,131 @@ def live_score(request, event_id):
 
 
 
-from django.shortcuts import render
-from .models import EventTickets
+
+from django.shortcuts import render, get_object_or_404
+from .models import EventTickets, ChatMessage
 
 def event_chat(request, event_id):
-    event = EventTickets.objects.get(id=event_id)
-    return render(request, 'bookers/chat.html', {'event': event, 'fan': request.user})
+    event = get_object_or_404(EventTickets, id=event_id)
+
+    # Simulating a live score fetch - replace this with an actual API call if available
+    live_score = {
+        "team_a": "Team A",
+        "team_b": "Team B",
+        "score_a": 1,
+        "score_b": 2
+    }
+
+    # Fetch all messages for this event
+    chat_messages = ChatMessage.objects.filter(publisher=event.publisher).order_by('timestamp')
+
+    return render(request, 'bookers/chat.html', {
+        'event': event,
+        'live_score': live_score,
+        'chat_messages': chat_messages
+    })
+
+
+
+
+
+
+
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.shortcuts import get_object_or_404
+from .models import ChatMessage, FanRegister, EventTickets
+
+def send_chat_message(request, event_id):
+    if request.method == "POST":
+        message_text = request.POST.get("message")
+        fan_name = request.POST.get("name")  # Get fan name from form input
+        event = get_object_or_404(EventTickets, id=event_id)
+
+        # Create or retrieve the fan by name (no authentication required)
+        fan, created = FanRegister.objects.get_or_create(name=fan_name)
+
+        # Store the message
+        ChatMessage.objects.create(
+            fan=fan,
+            publisher=event.publisher,
+            message=message_text
+        )
+
+    return HttpResponseRedirect(reverse('event_chat', args=[event_id]))
+
+
+
+
+
+
+from django.shortcuts import render, redirect
+from .models import PublisherRegister
+
+def view_publishers(request):
+    if 'admin' not in request.session:
+        return redirect('login')  # Ensure only admin can access
+    publishers = PublisherRegister.objects.all()
+    return render(request, 'admin/view_publishers.html', {'publishers': publishers})
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import PublisherRegister
+from django.contrib import messages
+
+def delete_publisher(request, publisher_id):
+    if 'admin' not in request.session:
+        return redirect('admin_login')  # Ensure only admin can access
+    
+    # Retrieve and delete publisher
+    publisher = get_object_or_404(PublisherRegister, id=publisher_id)
+    publisher.delete()
+    messages.success(request, "Publisher deleted successfully.")
+    return redirect('view_publishers')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -198,7 +198,7 @@
                 <p><strong>Price:</strong> ${{ event.price }}</p>
             </div>
             <a class="buy-ticket-btn" href="{% url 'purchase_ticket' event.id %}">Buy Ticket</a>
-            <a href="{% url 'event_chat' event.id %}" class="chat-button">Chat with Publisher</a>
+            <a href="{% url 'event_chat' event.id %}" class="chat-button">Live chat</a>
 
             <div class="live-score" id="live-score-{{ event.id }}">
                 <strong>Live Score:</strong> <span id="score-{{ event.id }}">Loading...</span>

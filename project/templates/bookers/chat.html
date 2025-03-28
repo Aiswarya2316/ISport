@@ -3,55 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Chat</title>
+    <title>Event Chat</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #121212; color: white; text-align: center; }
-        #chat-box { width: 60%; margin: auto; height: 400px; overflow-y: auto; background: #222; padding: 20px; border-radius: 8px; }
-        .message { margin: 10px; padding: 8px; border-radius: 5px; }
-        .fan { background: #ff5722; text-align: left; }
-        .publisher { background: #4CAF50; text-align: right; }
-        #message-input { width: 80%; padding: 10px; }
-        #send-btn { padding: 10px; background: #ff5722; border: none; color: white; cursor: pointer; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e4e4e4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .chat-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .live-score {
+            background: #ff5722;
+            padding: 10px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .messages {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #333;
+            border-radius: 8px;
+        }
+
+        .message {
+            padding: 8px 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+        }
+
+        .fan-message {
+            background-color: #007bff;
+            text-align: right;
+        }
+
+        .publisher-message {
+            background-color: #28a745;
+            text-align: left;
+        }
+
+        .chat-form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 15px;
+        }
+
+        .chat-form input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .chat-form button {
+            padding: 10px;
+            border: none;
+            background: #ff5722;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .chat-form button:hover {
+            background: #e64a19;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Live Chat for {{ event.title }}</h1>
-    <div id="chat-box"></div>
+    <div class="chat-container">
+        <div class="live-score">
+            Live Score: {{ live_score.team_a }} {{ live_score.score_a }} - {{ live_score.score_b }} {{ live_score.team_b }}
+        </div>
 
-    <input type="text" id="message-input" placeholder="Type a message...">
-    <button id="send-btn">Send</button>
+        <div class="messages">
+            {% for message in chat_messages %}
+                <div class="message {% if message.fan.name == request.COOKIES.fan_name %} fan-message {% else %} publisher-message {% endif %}">
+                    <strong>{{ message.fan.name }}:</strong> {{ message.message }}
+                </div>
+            {% empty %}
+                <p>No messages yet. Start the conversation!</p>
+            {% endfor %}
+        </div>
 
-    <script>
-        const eventId = "{{ event.id }}";
-        const fanId = "{{ fan.id }}";
-        const publisherId = "{{ event.publisher.id }}";
-        const chatBox = document.getElementById("chat-box");
-
-        const chatSocket = new WebSocket(`ws://${window.location.host}/ws/chat/${eventId}/`);
-
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            const messageElement = document.createElement("div");
-            messageElement.classList.add("message", data.fan === "{{ fan.name }}" ? "fan" : "publisher");
-            messageElement.innerText = `${data.fan}: ${data.message}`;
-            chatBox.appendChild(messageElement);
-            chatBox.scrollTop = chatBox.scrollHeight;
-        };
-
-        document.getElementById("send-btn").onclick = function() {
-            const messageInput = document.getElementById("message-input");
-            const message = messageInput.value.trim();
-            if (message) {
-                chatSocket.send(JSON.stringify({
-                    "message": message,
-                    "fan_id": fanId,
-                    "publisher_id": publisherId
-                }));
-                messageInput.value = "";
-            }
-        };
-    </script>
+        <form class="chat-form" method="post" action="{% url 'send_chat_message' event.id %}">
+            {% csrf_token %}
+            <input type="text" name="fan_name" placeholder="Enter your name" required>
+            <input type="text" name="message" placeholder="Type a message..." required>
+            <button ><a href="{% url 'purchase_ticket' event.id %}">event</a></button>
+        </form>
+    </div>
 
 </body>
 </html>

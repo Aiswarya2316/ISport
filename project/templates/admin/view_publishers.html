@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - ISport</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f4f7fa;
+            color: #333;
+        }
+
+        header {
+            background-color: #0056b3;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background-color: #004080;
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #0056b3;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: #0056b3;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        a.delete-btn {
+            color: white;
+            background-color: #e63946;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        a.delete-btn:hover {
+            background-color: #d62839;
+        }
+
+        footer {
+            background-color: #004080;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>ISport Admin Dashboard</h1>
+        <p>Manage Publishers and View Events</p>
+    </header>
+
+    <nav>
+        <a href="../adminhome">Home</a>
+        <a href="../adminview_events">View Events</a>
+        <a href="../adminbookings">View Bookings</a>
+        <a href="../viewusers">View Users</a>
+        <a href="../logout">Logout</a>
+    </nav>
+
+    <div class="container">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+            {% for publisher in publishers %}
+            <tr>
+                <td>{{ publisher.id }}</td>
+                <td>{{ publisher.name }}</td>
+                <td>{{ publisher.email }}</td>
+                <td>
+                    <a href="{% url 'delete_publisher' publisher.id %}" class="delete-btn" onclick="return confirm('Are you sure you want to delete this publisher?');">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 ISport. All Rights Reserved.</p>
+    </footer>
+</body>
+
+</html>
