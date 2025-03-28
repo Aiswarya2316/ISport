@@ -255,12 +255,23 @@ def view_event(request):
 
 
 from django.shortcuts import redirect, get_object_or_404
+from django.contrib import messages
 from .models import EventTickets
 
 def delete_event(request, event_id):
-    event = get_object_or_404(EventTickets, id=event_id, publisher=request.session.get('publisher'))  
-    event.delete()
+    publisher_id = request.session.get('publisher')  # Get the logged-in publisher ID
+
+    event = get_object_or_404(EventTickets, id=event_id)  # Get the event
+
+    if event.publisher_id != publisher_id:  # Check if the event belongs to the logged-in publisher
+        messages.error(request, "You are not authorized to delete this event!")  
+        return redirect('view_event')  # Redirect without deleting
+
+    event.delete()  # Delete only if the publisher matches
+    messages.success(request, "Event deleted successfully!")
     return redirect('view_event')
+
+
 
 
 

@@ -225,6 +225,13 @@
     <!-- Events Container -->
     <div class="events-container">
         <h1>Upcoming Events</h1>
+        {% if messages %}
+        <div class="error-message">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
 
         {% for event in events %}
         <div class="event-card">
