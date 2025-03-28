@@ -15,17 +15,26 @@ class FanRegister(models.Model):
     def __str__(self):
         return self.name
 
+from django.db import models
+
 class PublisherRegister(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+    ]
+
     email = models.EmailField(unique=True)
     name = models.TextField()
-    organization=models.TextField()
+    organization = models.TextField()
     password = models.TextField()
-    location= models.TextField()
-    confirm_password=models.TextField()
+    location = models.TextField()
+    confirm_password = models.TextField()
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')  # Default is Pending
 
     def __str__(self):
         return self.name
-    
+
 
 
 class adminreg(models.Model):

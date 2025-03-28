@@ -29,6 +29,9 @@ urlpatterns = [
     path('delete_event/<int:event_id>/', views.delete_event, name='delete_event'),
     path('view_publishers/', views.view_publishers, name='view_publishers'),
     path('delete_publisher/<int:publisher_id>/', views.delete_publisher, name='delete_publisher'),
+    path('manage_publisher/', views.manage_publisher, name='manage_publisher'),
+    path('approve_publisher/<int:publisher_id>/', views.approve_publisher, name='approve_publisher'),
+    path('reject_publisher/<int:publisher_id>/', views.reject_publisher, name='reject_publisher'),
    
     
     

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Events</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7; /* Soft light background */
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* Header Section */
+        header {
+            background-color: #1a73e8; /* Professional blue */
+            color: white;
+            text-align: center;
+            padding: 25px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 1.2em;
+            margin-top: 5px;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #333; /* Dark gray background for nav */
+            padding: 12px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #1a73e8; /* Blue highlight */
+            color: white;
+        }
+
+        /* Main Content Wrapper */
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-wrapper h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+        }
+
+        /* Events Section */
+        .events-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .event-item {
+            display: flex;
+            flex-direction: column;
+            padding: 25px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .event-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-item h3 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .event-item p {
+            font-size: 1em;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .event-details {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        .event-item .buy-ticket-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #28a745; /* Green button */
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        .event-item .buy-ticket-btn:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            nav ul li {
+                display: block;
+                margin: 10px 0;
+            }
+
+            .content-wrapper {
+                padding: 20px;
+            }
+
+            .event-item {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>ISport</h1>
+        <p>Welcome to the Admin Dashboard</p>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="../adminhome">Home</a></li>
+            <li><a href="../adminview_events">View Events</a></li>
+            <li><a href="../adminbookings">View Bookings</a></li>
+            <li><a href="../viewusers">View Users</a></li>
+            <li><a href="../logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <div class="content-wrapper">
+        <h1>Upcoming Publishers</h1>
+
+
+        {% block content %}
+        <h2>Manage Publishers</h2>
+        
+        {% for publisher in publishers %}
+            <div>
+                <p><strong>Name:</strong> {{ publisher.name }}</p>
+                <p><strong>Email:</strong> {{ publisher.email }}</p>
+                <p><strong>Organization:</strong> {{ publisher.organization }}</p>
+                <p><strong>Location:</strong> {{ publisher.location }}</p>
+        
+                <a href="{% url 'approve_publisher' publisher.id %}" class="btn btn-success">Approve</a>
+                <a href="{% url 'reject_publisher' publisher.id %}" class="btn btn-danger">Reject</a>
+            </div>
+            <hr>
+        {% endfor %}
+        
+        {% endblock %}
+        
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 ISport. All Rights Reserved.</p>
+    </footer>
+
+</body>
+
+</html>

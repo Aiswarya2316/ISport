@@ -542,163 +542,29 @@ def delete_publisher(request, publisher_id):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+from django.shortcuts import redirect, get_object_or_404, render
+from django.contrib import messages
+from .models import PublisherRegister
+
+def manage_publisher(request):
+    if not request.session.get('admin'):  # Check if the admin is logged in
+        messages.error(request, "You are not authorized to access this page.")
+        return redirect('admin_login')
+
+    publishers = PublisherRegister.objects.filter(status='pending')  # Show only pending approvals
+    return render(request, 'admin/manage_publisher.html', {'publishers': publishers})
+
+def approve_publisher(request, publisher_id):
+    publisher = get_object_or_404(PublisherRegister, id=publisher_id)
+    publisher.status = 'approved'
+    publisher.save()
+    messages.success(request, f"{publisher.name} has been approved!")
+    return redirect('manage_publisher')
+
+def reject_publisher(request, publisher_id):
+    publisher = get_object_or_404(PublisherRegister, id=publisher_id)
+    publisher.status = 'rejected'
+    publisher.save()
+    messages.warning(request, f"{publisher.name} has been rejected!")
+    return redirect('manage_publisher')
 
