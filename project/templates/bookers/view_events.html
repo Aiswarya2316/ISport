@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Events</title>
+    <title>View Events | ISport</title>
     <style>
-        /* General Styling */
+        /* Reset & Base */
         * {
             margin: 0;
             padding: 0;
@@ -13,15 +13,20 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #1C1C1C; /* Dark background for an intense feel */
-            color: #e4e4e4; /* Light text for readability */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1C1C1C;
+            color: #f0f0f0;
             line-height: 1.6;
         }
 
-        /* Header and Navigation */
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Header */
         header {
-            background-color:rgb(124, 18, 23); /* Bold red header */
+            background-color: rgb(124, 18, 23);
             color: white;
             text-align: center;
             padding: 40px 0;
@@ -30,137 +35,174 @@
         header h1 {
             font-size: 3.5em;
             font-weight: bold;
-            margin: 0;
         }
 
+        /* Navigation */
         nav {
-            background-color: #212121; /* Dark gray navigation */
+            background-color: #212121;
             padding: 15px 0;
             text-align: center;
             position: sticky;
             top: 0;
-            z-index: 999;
+            z-index: 1000;
         }
 
         nav ul {
-            list-style-type: none;
-            display: inline-block;
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         nav ul li {
-            display: inline;
-            margin: 0 25px;
+            margin: 0 15px;
         }
 
         nav ul li a {
-            text-decoration: none;
             color: white;
-            font-size: 1.2em;
-            padding: 12px 25px;
-            border-radius: 30px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 1.1em;
+            padding: 10px 20px;
+            border-radius: 25px;
             font-weight: bold;
+            transition: 0.3s ease;
         }
 
         nav ul li a:hover {
-            background-color: #ff5722; /* Orange-red hover effect */
-            transform: scale(1.1); /* Slight zoom effect on hover */
+            background-color: #ff5722;
+            transform: scale(1.05);
         }
 
-        /* Events Container */
+        /* Search Bar */
+        .search-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 12px;
+            width: 300px;
+            border-radius: 5px;
+            border: none;
+            font-size: 1em;
+        }
+
+        .search-bar button {
+            padding: 12px 20px;
+            background-color: #ff5722;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1em;
+            margin-left: 10px;
+            cursor: pointer;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: rgb(23, 116, 20);
+        }
+
+        /* Events Section */
         .events-container {
             max-width: 1200px;
-            margin: 50px auto;
-            padding: 30px;
-            background-color: #2e2e2e; /* Darker background for events section */
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            margin: 0 auto 100px auto;
+            padding: 0 20px;
         }
 
         .events-container h1 {
             text-align: center;
-            color: #e50914; /* Bold red for headings */
-            font-size: 2.5em;
+            color: #e50914;
+            margin-bottom: 30px;
+            font-size: 2.8em;
         }
 
         .event-item {
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            background-color: #333; /* Dark background for each event */
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #2e2e2e;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .event-item:hover {
+            transform: translateY(-5px);
         }
 
         .event-item h3 {
-            margin-top: 0;
-            font-size: 24px;
-            color: #fff;
-            font-weight: bold;
+            font-size: 1.8em;
+            margin-bottom: 10px;
         }
 
         .event-item p {
-            font-size: 16px;
-            color: #ccc; /* Light gray for the description text */
+            font-size: 1em;
+            margin-bottom: 8px;
+            color: #ccc;
         }
 
-        .event-item .event-details {
-            margin-top: 10px;
-            font-size: 14px;
-            color: #999; /* Slightly muted color for details */
+        .event-details p {
+            color: #aaa;
         }
 
-        .event-item .buy-ticket-btn {
-            display: inline-block;
+        .event-actions {
             margin-top: 20px;
-            padding: 5px 20px;
-            width:80px;
-            background-color: #ff5722; /* Bold orange-red button */
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
-        .event-item .buy-ticket-btn:hover {
-            background-color:rgb(23, 116, 20); /* Darker red when hovered */
+        .buy-ticket-btn,
+        .chat-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff5722;
+            color: white;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-right: 15px;
+        }
+
+        .buy-ticket-btn:hover,
+        .chat-button:hover {
+            background-color: rgb(23, 116, 20);
             transform: scale(1.05);
+        }
+
+        .live-score {
+            margin-top: 10px;
+            font-style: italic;
+            color: #bbb;
         }
 
         /* Footer */
         footer {
             background-color: #212121;
-            color: white;
+            color: #aaa;
             text-align: center;
-            padding: 15px;
+            padding: 20px 0;
             position: fixed;
             bottom: 0;
             width: 100%;
+            font-size: 0.9em;
         }
 
-        /* Responsiveness */
+        /* Responsive */
         @media (max-width: 768px) {
-            nav ul li {
-                display: block;
-                margin: 15px 0;
+            nav ul {
+                flex-direction: column;
             }
 
-            .events-container {
-                padding: 20px;
+            .search-bar input[type="text"] {
+                width: 90%;
+                margin-bottom: 10px;
             }
 
-            .event-item h3 {
-                font-size: 22px;
+            .event-actions {
+                display: flex;
+                flex-direction: column;
             }
 
-            .event-item p {
-                font-size: 14px;
-            }
-
-            .event-item .buy-ticket-btn {
-                padding: 12px 25px;
+            .event-actions a {
+                margin-bottom: 10px;
             }
         }
     </style>
@@ -168,12 +210,10 @@
 
 <body>
 
-    <!-- Header Section -->
     <header>
         <h1>ISport</h1>
     </header>
 
-    <!-- Navigation Bar -->
     <nav>
         <ul>
             <li><a href="../fanshome">Home</a></li>
@@ -181,10 +221,17 @@
             <li><a href="../view_events">View Events</a></li>
             <li><a href="../bookinghistory">Book Events</a></li>
             <li><a href="../logout">Logout</a></li>
+            <li>  <div class="search-bar">
+                <form method="get">
+                    <input type="text" name="location" placeholder="Search events by location" value="{{ search_query|default:'' }}">
+                    <button type="submit">Search</button>
+                </form>
+            </div></li>
         </ul>
     </nav>
 
-    <!-- Main Content - Events -->
+   
+
     <div class="events-container">
         <h1>Upcoming Events</h1>
 
@@ -195,25 +242,22 @@
             <div class="event-details">
                 <p><strong>Date:</strong> {{ event.date }}</p>
                 <p><strong>Location:</strong> {{ event.location }}</p>
-                <p><strong>Price:</strong> ${{ event.price }}</p>
+                <p><strong>Price:</strong> ₹{{ event.price }}</p>
+                <p><strong>Stock:</strong> {{ event.stock }}</p>
             </div>
-            <a class="buy-ticket-btn" href="{% url 'purchase_ticket' event.id %}">Buy Ticket</a>
-            <a href="{% url 'event_chat' event.id %}" class="chat-button">Live chat</a>
-
+            <div class="event-actions">
+                <a class="buy-ticket-btn" href="{% url 'purchase_ticket' event.id %}">Buy Ticket</a>
+                <a class="chat-button" href="{% url 'event_chat' event.id %}">Live Chat</a>
+            </div>
             <div class="live-score" id="live-score-{{ event.id }}">
                 <strong>Live Score:</strong> <span id="score-{{ event.id }}">Loading...</span>
             </div>
         </div>
         {% empty %}
-        <p>No events available at the moment.</p>
+        <p style="text-align: center; margin-top: 40px;">No events found for the selected location.</p>
         {% endfor %}
-
-      
-        
-
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2025 ISport. All Rights Reserved.</p>
     </footer>
@@ -223,23 +267,19 @@
             fetch(`/live-score/${eventId}/`)
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById(`score-${eventId}`).innerText = 
+                    document.getElementById(`score-${eventId}`).innerText =
                         `${data.team_a} ${data.score_a} - ${data.score_b} ${data.team_b}`;
                 })
-                .catch(error => console.log("Error fetching live score:", error));
+                .catch(error => console.error("Live score error:", error));
         }
-        
-        // Auto-refresh scores every 5 seconds
-        document.addEventListener("DOMContentLoaded", function() {
+
+        document.addEventListener("DOMContentLoaded", function () {
             {% for event in events %}
-                fetchLiveScore({{ event.id }});  // Initial fetch
-                setInterval(() => fetchLiveScore({{ event.id }}), 5000); // Refresh every 5s
+                fetchLiveScore({{ event.id }});
+                setInterval(() => fetchLiveScore({{ event.id }}), 5000);
             {% endfor %}
         });
-        
     </script>
-    
 
 </body>
-
 </html>

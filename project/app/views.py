@@ -38,6 +38,8 @@ def get_fans(request):
         return None
 
 
+import re
+
 def fan_register(request):
     if request.method == 'POST':
         name = request.POST['name']
@@ -46,20 +48,38 @@ def fan_register(request):
         location = request.POST['location']
         password = request.POST['password']
         confirm_password = request.POST['confirm_password']
+
         if password != confirm_password:
             messages.error(request, "Passwords do not match!")
             return redirect('fan_register')
+
         if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
             messages.error(request, "Invalid email format!")
             return redirect('fan_register')
+
+        # ✅ Phone number validation (10-digit example)
+        if not re.match(r"^\d{10}$", phone):
+            messages.error(request, "Invalid phone number! Enter a 10-digit number.")
+            return redirect('fan_register')
+
         if FanRegister.objects.filter(email=email).exists():
             messages.error(request, "Email already registered!")
             return redirect('fan_register')
-        donor = FanRegister(name=name, email=email, phone=phone, location=location, password=password , confirm_password=confirm_password)
+
+        donor = FanRegister(
+            name=name,
+            email=email,
+            phone=phone,
+            location=location,
+            password=password,
+            confirm_password=confirm_password
+        )
         donor.save()
         messages.success(request, "Registration successful! Please log in.")
         return redirect('login')
+
     return render(request, 'bookers/fan_register.html')
+
 
 
 from .models import AdminNotification
@@ -207,42 +227,53 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 
-# Publisher adds event ticket details
+from django.utils.dateparse import parse_date
+from django.utils.timezone import now
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+import datetime
+
 def add_event(request):
     if request.method == 'POST':
         publisher_name = request.POST.get('publisher_name')
 
         try:
-            # Try to find the publisher by name
             publisher = PublisherRegister.objects.get(name=publisher_name)
-
         except ObjectDoesNotExist:
-            # If no publisher found, return an error message
             return HttpResponse("Publisher with this name does not exist.", status=404)
 
         title = request.POST.get('title')
         description = request.POST.get('description')
-        date = request.POST.get('date')
+        date_str = request.POST.get('date')
         location = request.POST.get('location')
         price = request.POST.get('price')
+        stock = request.POST.get('stock')
 
-        if title and description and date and location and price:
+        # Parse and validate the date
+        try:
+            date = parse_date(date_str)
+            if date < datetime.date.today():
+                return HttpResponse("Event date cannot be in the past.", status=400)
+        except:
+            return HttpResponse("Invalid date format.", status=400)
+
+        if title and description and date and location and price and stock:
             event = EventTickets.objects.create(
                 publisher=publisher,
                 title=title,
                 description=description,
                 date=date,
                 location=location,
-                price=price
+                price=price,
+                stock=int(stock)
             )
-            return redirect('view_event')  # Redirect to events page after adding
+            return redirect('view_event')
 
         else:
             return HttpResponse("Please fill in all the fields", status=400)
 
     return render(request, 'publisher/add_event.html')
-
-
 
 
 
@@ -277,10 +308,16 @@ def delete_event(request, event_id):
 
 
 # View for displaying all events
-def view_events(request):
-    events = EventTickets.objects.all()
-    return render(request, 'bookers/view_events.html', {'events': events})
+from django.db.models import Q
+from .models import EventTickets
 
+def view_events(request):
+    query = request.GET.get('location')
+    if query:
+        events = EventTickets.objects.filter(location__icontains=query)
+    else:
+        events = EventTickets.objects.all()
+    return render(request, 'bookers/view_events.html', {'events': events, 'search_query': query})
 
 
 
@@ -314,9 +351,17 @@ def purchase_ticket(request, event_id):
     if request.method == "POST":
         fan_name = request.POST["fan_name"]
         num_tickets = int(request.POST["number_of_tickets"])
+
+        # ✅ Stock check
+        if num_tickets > event.stock:
+            return render(request, "bookers/purchase_ticket.html", {
+                "event": event,
+                "error": f"Only {event.stock} tickets are available."
+            })
+
         total_amount = event.price * num_tickets * 100  # Convert to paise
 
-        if total_amount > 50000000:  # Razorpay max limit (₹5,00,000)
+        if total_amount > 50000000:
             return render(request, "bookers/purchase_ticket.html", {
                 "event": event,
                 "error": "Total amount exceeds the allowed limit of ₹5,00,000 per transaction."
@@ -325,7 +370,10 @@ def purchase_ticket(request, event_id):
         fan = FanRegister.objects.filter(name=fan_name).first()
 
         if not fan:
-            return render(request, "bookers/purchase_ticket.html", {"event": event, "error": "Fan not registered."})
+            return render(request, "bookers/purchase_ticket.html", {
+                "event": event,
+                "error": "Fan not registered."
+            })
 
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
         order_data = {
@@ -356,15 +404,19 @@ def purchase_ticket(request, event_id):
     return render(request, "bookers/purchase_ticket.html", {"event": event})
 
 
-
 @csrf_exempt
 def payment_success(request):
     order_id = request.GET.get("order_id")
     ticket_purchase = TicketPurchase.objects.filter(razorpay_order_id=order_id).first()
 
-    if ticket_purchase:
+    if ticket_purchase and ticket_purchase.payment_status != "Paid":
         ticket_purchase.payment_status = "Paid"
         ticket_purchase.save()
+
+        # Decrease stock
+        event = ticket_purchase.event
+        event.stock -= ticket_purchase.number_of_tickets
+        event.save()
 
     return render(request, "bookers/success.html", {"ticket": ticket_purchase})
 

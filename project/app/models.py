@@ -49,18 +49,18 @@ class adminreg(models.Model):
     
     
 from django.db import models
-
 class EventTickets(models.Model):
-    publisher = models.ForeignKey(PublisherRegister, on_delete=models.CASCADE, related_name='events')  # Linking event to a publisher
+    publisher = models.ForeignKey(PublisherRegister, on_delete=models.CASCADE, related_name='events')
     title = models.CharField(max_length=255)
     description = models.TextField()
     date = models.DateField()
     location = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    
+    stock = models.PositiveIntegerField(default=0)  # New field for ticket stock
+
     def __str__(self):
         return self.title
-    
+
     
     
 

@@ -40,7 +40,7 @@
 
 .registration-card input {
     width: 100%;
-    padding: 10px;
+    padding: 2px;
     margin-bottom: 15px;
     border: 1px solid #dddddd;
     border-radius: 5px;
@@ -48,13 +48,14 @@
 
 .registration-card button {
     width: 100%;
-    padding: 12px;
+    padding: 2px;
     background-color: #007BFF;
     border: none;
     border-radius: 5px;
     color: white;
     font-size: 16px;
     cursor: pointer;
+    margin-top: 10px
 }
 
 .registration-card button:hover {
@@ -65,7 +66,7 @@
 </head>
 <body>
     <div class="registration-card">
-        <h2>Register</h2>
+        <h2>Register as User</h2>
         <form action=" " method="POST">
             {% csrf_token %}
             <label for="name">Name</label>
